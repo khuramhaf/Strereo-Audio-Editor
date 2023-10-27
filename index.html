@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-36TNB1000S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-36TNB1000S');
+</script>
+    <link rel="icon" type="image/png" sizes="32x32" href="download.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is Stereo Audio Editor that can perform Audio Trimming, Cutting and Joining. You can edit upto 2000 seconds even more">
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="wufile.js"></script>
+    <script src="play.js"></script>
+    <script src="wutrim.js"></script>
+    <script src="wucut.js"></script>
+    <script src="undo.js"></script>
+   <script src="export.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <title>Stereo Audio Trimmer and Cutter</title>
+</head>
+<body>
+
+
+
+    <script type="text/javascript">
+        atOptions = {
+            'key' : '6b1f2aa57727a7bdef3f2b00133cc17e',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+        };
+        document.write('<scr' + 'ipt type="text/javascript" src="//www.profitablecreativeformat.com/6b1f2aa57727a7bdef3f2b00133cc17e/invoke.js"></scr' + 'ipt>');
+    </script>
+
+    <div id ="container">
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index.html">Amooiz.com</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../about.html">About</a>
+                  </li>
+                  
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Products
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../index.html">Audio Editor Mono</a></li>
+                         <li><a class="dropdown-item" href="index.html">Audio Editor Stereo</a></li>
+                      <li><a class="dropdown-item" href="../video-editor.html">Video Editor</a></li>
+                      <li><a class="dropdown-item" href="../graphic-editor.html">Graphic Editor</a></li>
+                      <li><a class="dropdown-item" href="../neural-network.html">Neural Network</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../privacy-policy.html">Privacy Policy</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    
+    
+    
+        <h1>Stereo Audio Trimmer and Cutter Online</h1>
+    <button style="float:right;" onclick="exportdata()">export</button>
+    <div class="input-group mb-3">
+        <div class = "col-sx-3">
+        <input type="file" class="form-control" id="inputGroupFile02" onchange="myFunction()">
+       </div> <label class="input-group-text" for="inputGroupFile02">Upload</label>
+      </div>
+    <span id="status"></span>
+    <div>
+    <span>Error: </span>
+    <span style="color:red" id = "error"></span>
+</div>
+    <div id = "audioinfo">
+    <span >Audio Time: </span>
+    <span id = 'timer'>0</span>
+    <span  class ="info">Audio Duration: </span>
+    <span   id = 'duration'>0</span>
+    <br id = "linebreak"/>
+    <span id ="totallength1"  class="info" >Total Length: </span>
+    <span  id = 'totallength'>0</span>
+    <span  class="info">Selected Length: </span>
+    <span  id = 'selectedlength'>0</span>
+</div>
+
+    <div style=" background-color:lightblue;padding:15px;">
+        
+     
+    <div id ="information">
+
+    
+
+</div>
+<canvas id ="canvas11" style="width:100%; background-color:blue; height:150px"></canvas>
+<br/>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="inputGroup-sizing-default">Starting Time in Seconds</span>
+  <div class = "col-sx-3">
+  <input id = "start" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-default">Ending Time in Seconds</span>
+    <div class = "col-sx-3">
+    <input  id = "end" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+  </div>
+</div>
+
+
+
+        <div id = "button" class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary"onclick="play()">Play</button>
+            <button type="button" class="btn btn-primary" onclick="stop()">Stop</button>
+            <button type="button" class="btn btn-primary" onclick="trim()">Trim</button>
+            <button type="button" class="btn btn-primary" onclick="cut()">Cut</button>
+            <button type="button" class="btn btn-primary" onclick="undodata()">Undo</button>
+          
+          </div>
+
+
+
+</div>
+
+
+<p>This is Stereo Audio Editor that can perform Audio Trimming, Cutting and Joining. You can edit upto 2000 seconds even more</p>
+
+
+</div>
+
+
+   
+   <script>
+
+   
+        var bufferarray = [];
+        var audiocontext;
+        var source;
+        var time=0;
+        let intervalid;
+        var check = null;
+        var sourcecheck = null;
+        var sourceduration = 0;
+        var undo = [];
+
+
+
+      
+    
+
+
+
+
+function stop(){
+if (source){
+    source.stop();
+    clearInterval(intervalid);
+}
+}
+
+
+    </script>
+
+  
+</body>
+</html>
