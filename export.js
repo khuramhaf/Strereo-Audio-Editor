@@ -4,6 +4,8 @@ function exportdata(){
 
     if (check!=null && bufferarray.length>0){
 
+        document.getElementById("Spinner").style.display = "block"
+        document.getElementById("spinner1").style.display = "block"
         document.getElementById("status").innerHTML = "Encoding in Progress it may take some time";
         var buttons = document.getElementsByClassName("button")
         var buttons1 = document.getElementsByClassName("button2")
@@ -37,6 +39,9 @@ function exportdata(){
   a.click();
   document.body.removeChild(a);
   document.getElementById("status").innerHTML = "";
+  document.getElementById("Spinner").style.display = "none"
+  document.getElementById("spinner1").style.display = "none"
+
   var buttons = document.getElementsByClassName("button")
   var buttons1 = document.getElementsByClassName("button2")
 	

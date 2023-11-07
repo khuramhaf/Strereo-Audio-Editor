@@ -22,6 +22,10 @@ if (sourcecheck === null){
     if(source){
         source.stop();
     }
+
+    if(source1){
+        source1.stop();
+    }
 }
 
 if (check === null ){

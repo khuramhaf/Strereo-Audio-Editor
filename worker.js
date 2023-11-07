@@ -24,7 +24,6 @@ if(event.data.data2 != null){
   // Create a Lame encoder with 2 channels (stereo) and the desired bitrate
   const mp3encoder = new lamejs.Mp3Encoder(2, myArray.samplerate, 128);
 
-  console.log(samplesRight)
   // Encode the left and right channels separately
   const mp3TmpLeft = mp3encoder.encodeBuffer(samplesLeft, samplesRight);
   

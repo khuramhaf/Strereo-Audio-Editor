@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-36TNB1000S"></script>
 <script>
@@ -10,11 +14,12 @@
 
   gtag('config', 'G-36TNB1000S');
 </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="download.png">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="This is Stereo Audio Editor that can perform Audio Trimming, Cutting and Joining. You can edit upto 2000 seconds even more">
+    <meta name="keywords" content="Online Audio Editor, MP3 Editor Online, Audio Effects Editor, Audio Cutter, Audio Editing Software, Audio Trimmer, Two Channels Audio Editing" />
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="wufile.js"></script>
     <script src="play.js"></script>
@@ -22,6 +27,20 @@
     <script src="wucut.js"></script>
     <script src="undo.js"></script>
    <script src="export.js"></script>
+   <script src="fades.js"></script>
+   <script src="fadespreview.js"></script>
+   <script src="biquad.js"></script>
+   <script src="biquadpreview.js"></script>
+   <script src="loadsample.js"></script>
+   <script src="chrous.js"></script>
+   <script src="chrouspreview.js"></script>
+   <script src="distortion.js"></script>
+   <script src="compressor.js"></script>
+   <script src="compressorpreview.js"></script>
+   <script src="distortionpreview.js"></script>
+
+
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -29,19 +48,180 @@
     <title>Stereo Audio Trimmer and Cutter</title>
 </head>
 <body>
+<div style="width:100%; position: absolute; background-color: blue; height:100vh" id = "spinner1"><div class="spinner" id="Spinner"></div></div>
+
+  
+  <div id = "gainux" style=" height: 300px;position:absolute;background-color:red; padding:20px;">
+  <h5>Fade In and Out</h5>
+    
+    <div>
+    <label>Starting Gain:</label>
+    <button style="margin-left: 10%;" onclick="fadespreview()">Preview</button>
+    <button onclick="displaynone1()" style="float:right">x</button>
+    
+    <br/>
+    <input id="gainstart" type="number" required/>
+    <br/>
+    <label>Ending Gain:</label>
+    <br/>
+    <input id="gainreach" type="number" required/>
+    </div>
+    <br/>
+   
+   
+    <label>Select Option:</label>
+        <br/>
+    <select id ="gainselect">
+        <option>set value at time</option>
+        <option>linear ramp</option>
+        <option>exponential ramp</option>
+    </select>
+    <br/>
+    <button onclick="fades()">Apply</button>
+    
+    
+    </div>
+
+
+  
+    <div id = "chrousux" style=" height: 300px;position:absolute;background-color:red; padding:20px;">
+      <h5>Chrous</h5>
+      <div>
+      <label>Depth:</label>
+      <button style="margin-left: 10%;" onclick="chrouspreview1()">Preview</button>
+      <button onclick="displaynone3()" style="float:right">x</button>
+      
+      <br/>
+      <input id="depth" type="number" required/>
+      <br/>
+      <label>Rate:</label>
+      <br/>
+      <input id="rate" type="number" required/>
+      </div>
+      <br/>
+
+      
+      <label>Select Option:</label>
+          <br/>
+      <select id ="chrousselect">
+          <option>sine</option>
+          <option>square</option>
+          <option>sawtooth</option>
+          <option>triangle</option>
+      </select>
+      <br/>
+      <button onclick="chrous1()">Apply</button>
+      
+      
+      </div>
 
 
 
-    <script type="text/javascript">
-        atOptions = {
-            'key' : '6b1f2aa57727a7bdef3f2b00133cc17e',
-            'format' : 'iframe',
-            'height' : 90,
-            'width' : 728,
-            'params' : {}
-        };
-        document.write('<scr' + 'ipt type="text/javascript" src="//www.profitablecreativeformat.com/6b1f2aa57727a7bdef3f2b00133cc17e/invoke.js"></scr' + 'ipt>');
-    </script>
+
+      
+
+  
+    <div id = "disux" style=" height: 300px;position:absolute;background-color:red; padding:20px;">
+      <h5>Distortion</h5>
+      <div>
+      <label>Gain:</label>
+      <button style="margin-left: 10%;" onclick="distortionpreview1()">Preview</button>
+      <button onclick="displaynone4()" style="float:right">x</button>
+      
+      <br/>
+      <input id="gain1" type="number" required/>
+      <br/>
+      <label>Amount:</label>
+      <br/>
+      <input id="amount" type="number" required/>
+      </div>
+      <br/>
+      <button onclick="distortion1()">Apply</button>
+      
+      
+      </div>
+
+
+
+    <div id = "biquadux" style=" height: 450px;position:absolute;background-color:red; padding:20px;">
+      <h5>Biquad Filter</h5>
+      <div>
+      <label>Frequency:</label>
+      <button style="margin-left: 10%;" onclick="biquadpreview()">Preview</button>
+      <button onclick="displaynone2()" style="float:right">x</button>
+      <br/>
+      <input id="frequency" type="number" required/>
+      <br/>
+      <label>Frequency Reach:</label>
+      <br/>
+      <input id="reach" type="number" required/>
+      <br/>
+      <label>Q Value:</label>
+      <br/>
+      <input id="qvalue" type="number" required/>
+      <br/>
+      <label>Gain:</label>
+      <br/>
+      <input id="gain" type="number" required/>
+      </div>
+      <br/>
+      <label>Select Option:</label>
+          <br/>
+      <select id ="type">
+          <option>low pass</option>
+          <option>high pass</option>
+          <option>band</option>
+      </select>
+      <br/>
+     
+      <label>Select Option:</label>
+          <br/>
+      <select id ="freqselect">
+          <option>set value at time</option>
+          <option>linear ramp</option>
+          <option>exponential ramp</option>
+      </select>
+      <br/>
+      <button onclick="biquad()">Apply</button>
+      
+      
+      </div>
+   
+      <div id = "compressionux" style=" height: 400px;position:absolute;background-color:red; padding:20px;">
+        <h5>Compression</h5>
+        <div>
+        <label>Threshold:</label>
+        <button style="margin-left:30%;" onclick="compressorpreview1()">Preview</button>
+
+        <button onclick="displaynone5()" style="float:right">x</button>
+        
+        <br/>
+        <input id="threshold" type="number" required/>
+        <br/>
+        <label>Knee:</label>
+        <br/>
+        <input id="knee" type="number" required/>
+        <br/>
+        <label>Ratio:</label>
+        <br/>
+        <input id="ratio" type="number" required/>
+        <br/>
+        <label>Attack:</label>
+        <br/>
+        <input id="attack" type="number" required/>
+        <br/>
+        <label>Release:</label>
+        <br/>
+        <input id="release" type="number" required/>
+        </div>
+        <button onclick="compressor1()">Apply</button>
+    
+    
+    </div> 
+
+
+
+
 
     <div id ="container">
 
@@ -86,6 +266,7 @@
     
     
         <h1>Stereo Audio Trimmer and Cutter Online</h1>
+        <button style="float:right;" onclick="loadsample()">Load Sample</button>
     <button style="float:right;" onclick="exportdata()">export</button>
     <div class="input-group mb-3">
         <div class = "col-sx-3">
@@ -122,13 +303,13 @@
 <div class="input-group mb-3">
   <span class="input-group-text" id="inputGroup-sizing-default">Starting Time in Seconds</span>
   <div class = "col-sx-3">
-  <input id = "start" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+  <input oninput="keydownfun(this)" id = "start" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 </div>
 
 <div class="input-group mb-3">
     <span class="input-group-text" id="inputGroup-sizing-default">Ending Time in Seconds</span>
     <div class = "col-sx-3">
-    <input  id = "end" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    <input oninput="keydownfun(this)"  id = "end" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
   </div>
 </div>
 
@@ -141,6 +322,18 @@
             <button type="button" class="btn btn-primary" onclick="cut()">Cut</button>
             <button type="button" class="btn btn-primary" onclick="undodata()">Undo</button>
           
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+               Effects
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" onclick="gain()">Gain</a></li>
+                <li><a class="dropdown-item" onclick="frequency()">Biquad Filter</a></li>
+                <li><a class="dropdown-item" onclick="chrous()">Chorus</a></li>
+                <li><a class="dropdown-item" onclick="distortion()">Distortion</a></li>
+                <li><a class="dropdown-item" onclick="compression()">Compression</a></li>
+              </ul>
+            </div>
           </div>
 
 
@@ -148,12 +341,32 @@
 </div>
 
 
-<p>This is Stereo Audio Editor that can perform Audio Trimming, Cutting and Joining. You can edit upto 2000 seconds even more</p>
+<p>This is Stereo Audio Editor that can perform Audio Trimming, Cutting and Joining. You can edit upto 2000 seconds of Audio or even more. The audio editor can edit one channel and two channels audio files.</p>
 
+<h2>How to Trim and Cut audio files</h2>
+<iframe class="video" src="https://www.youtube.com/embed/kcGJgaIMS0U?si=1ZZvFCSI4ibeHqnE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<br/>
+<br/>
+<h2>How to Join multiple audio files</h2>
+
+<iframe class="video" src="https://www.youtube.com/embed/Vcp9UjOR0k8?si=a3jEANQ33AJ9Sn5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<br/>
+<br/>
+<h2>How to add fade-in and fade-out effect</h2>
+<iframe class="video" src="https://www.youtube.com/embed/15aCfqLlwzI?si=PaRsS3WVkv8wlz_G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 </div>
 
-
+<!-- Yandex.RTB R-A-3685952-1 -->
+<script>
+  window.yaContextCb.push(()=>{
+    Ya.Context.AdvManager.render({
+      "blockId": "R-A-3685952-1",
+      "type": "floorAd",
+      "platform": "desktop"
+    })
+  })
+  </script>
    
    <script>
 
@@ -167,6 +380,7 @@
         var sourcecheck = null;
         var sourceduration = 0;
         var undo = [];
+        var source1;
 
 
 
@@ -181,8 +395,83 @@ if (source){
     source.stop();
     clearInterval(intervalid);
 }
+
+if (source1){
+    source1.stop();
+}
 }
 
+
+    
+function keydownfun(){
+
+if (check!==null){
+
+var start =parseFloat(document.getElementById("start").value)
+var end =parseFloat(document.getElementById("end").value);
+var index = end*audiocontext.sampleRate - start*audiocontext.sampleRate;
+document.getElementById("selectedlength").innerHTML=parseInt(index);
+}
+
+document.getElementById("error").innerHTML = "";
+}
+
+
+function gain(){
+
+  document.getElementById("gainux").style.display = "block"
+}
+
+
+function frequency(){
+
+document.getElementById("biquadux").style.display = "block"
+}
+
+function chrous(){
+
+  document.getElementById("chrousux").style.display = "block"
+
+}
+
+function distortion(){
+
+document.getElementById("disux").style.display = "block"
+
+}
+
+function compression(){
+
+document.getElementById("compressionux").style.display = "block"
+
+}
+
+
+function displaynone1(){
+
+  document.getElementById("gainux").style.display = "none"
+}
+
+function displaynone2(){
+
+document.getElementById("biquadux").style.display = "none"
+}
+
+
+function displaynone3(){
+
+document.getElementById("chrousux").style.display = "none"
+}
+
+function displaynone4(){
+
+document.getElementById("disux").style.display = "none"
+}
+
+function displaynone5(){
+
+document.getElementById("compressionux").style.display = "none"
+}
 
     </script>
 

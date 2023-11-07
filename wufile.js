@@ -3,6 +3,9 @@
 function myFunction() {
 
     document.getElementById("status").innerHTML = "Loading and decoding file..."
+    document.getElementById("Spinner").style.display = "block"
+    document.getElementById("spinner1").style.display = "block"
+
      
             clearInterval(intervalid);
     
@@ -57,14 +60,14 @@ function myFunction() {
             bufferarray = combinedbuffer1;
 
 
-            console.log(bufferarray.getChannelData(1))
+           
             
             
             }
             
             else{
                bufferarray = audiofile
-console.log(audiofile);
+
           
             }
     
@@ -118,8 +121,13 @@ canctx.stroke();
     }, 1000);
     }
     document.getElementById("status").innerHTML = "";
+    document.getElementById("Spinner").style.display = "none"
+    document.getElementById("spinner1").style.display = "none"
        }).catch(function(error){
         document.getElementById("status").innerHTML = "";
+        document.getElementById("Spinner").style.display = "none"
+        document.getElementById("spinner1").style.display = "none"
+
         document.getElementById("error").innerHTML = "Cannot open file"
        });;
     
