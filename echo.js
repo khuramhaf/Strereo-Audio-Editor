@@ -1,16 +1,13 @@
 var newsource;
 
-function compressor1(){
+function echo1(){
     clearInterval(intervalid);
 
-    document.getElementById("compressionux").style.display = "none"
+    document.getElementById("echoux").style.display = "none"
     var start = parseFloat(document.getElementById("start").value);
     var end = parseFloat(document.getElementById("end").value);
-    var threshold= parseFloat(document.getElementById("threshold").value);
-    var knee = parseFloat(document.getElementById("knee").value);
-    var ratio = parseFloat(document.getElementById("ratio").value)
-    var attack = parseFloat(document.getElementById("attack").value)
-   var release = document.getElementById("release").value; 
+    var delay= parseFloat(document.getElementById("delay").value);
+    var feedback = parseFloat(document.getElementById("feedback").value);
   
 
 time = parseInt(start);
@@ -137,52 +134,18 @@ if(bufferarray.numberOfChannels>1){
 }
 
 source1 = offlineCtx.createBufferSource();
-const compressorNode = offlineCtx.createDynamicsCompressor();
-
-if(isNaN(threshold)){
-
-}
-else{
-    compressorNode.threshold.value = threshold;
-}
-
-if(isNaN(knee)){
-
-}
-
-else{
-    compressorNode.knee.value = knee;
-}
-
-if(isNaN(ratio)){
-
-}
-
-else{
-    compressorNode.ratio.value = ratio;
-}
-
-if(isNaN(attack)){
-
-}
-
-else{
-    compressorNode.attack.value = attack;
-}
-
-if(isNaN(release)){
-
-}
-
-else{
-    compressorNode.release.value = release;
-}
-
-
-
 source1.buffer = sourcebuffer;
-source1.connect(compressorNode)
-compressorNode.connect(offlineCtx.destination)
+const delayNode = offlineCtx.createDelay();
+delayNode.delayTime.value = delay;
+
+
+const feedbackNode = offlineCtx.createGain();
+feedbackNode.gain.value = feedback;
+
+source1.connect(delayNode);
+delayNode.connect(feedbackNode);
+feedbackNode.connect(delayNode); // Create a feedback loop
+delayNode.connect(offlineCtx.destination);
 source1.start(0)
 source1.stop(array1.length/bufferarray.sampleRate)
          offlineCtx

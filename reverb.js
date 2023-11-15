@@ -1,17 +1,14 @@
 var newsource;
 
-function compressor1(){
+function reverb1(){
     clearInterval(intervalid);
 
-    document.getElementById("compressionux").style.display = "none"
+    document.getElementById("reverbux").style.display = "none"
     var start = parseFloat(document.getElementById("start").value);
     var end = parseFloat(document.getElementById("end").value);
-    var threshold= parseFloat(document.getElementById("threshold").value);
-    var knee = parseFloat(document.getElementById("knee").value);
-    var ratio = parseFloat(document.getElementById("ratio").value)
-    var attack = parseFloat(document.getElementById("attack").value)
-   var release = document.getElementById("release").value; 
-  
+    var wet= parseFloat(document.getElementById("wet").value);
+    var gain2 = parseFloat(document.getElementById("gain2").value);
+
 
 time = parseInt(start);
 
@@ -86,6 +83,11 @@ document.getElementById("error").innerHTML = "Ending Point is greater than equal
 
 }
 
+else if (isNaN(wet)){
+
+    
+}
+
 else{
     var newbuffer = audiocontext.createBuffer(bufferarray.numberOfChannels, bufferarray.length, bufferarray.sampleRate)
 var ab3 = newbuffer.getChannelData(0)
@@ -136,53 +138,38 @@ if(bufferarray.numberOfChannels>1){
     channeldata1.set(array5)
 }
 
+
+const bufferSize = offlineCtx.sampleRate * wet; // Adjust the buffer size as needed
+const impulseBuffer = offlineCtx.createBuffer(1, bufferSize, audiocontext.sampleRate);
+const impulseData = impulseBuffer.getChannelData(0);
+
+for (let i = 0; i < bufferSize; i++) {
+    // Apply decay by gradually reducing amplitude over time
+    const decayFactor = 1 - (i / bufferSize);
+    impulseData[i] = (Math.random() * 2 - 1) * decayFactor; // Apply decay to the impulse
+  }
+
+
+  const convolver = offlineCtx.createConvolver();
+convolver.buffer = impulseBuffer;
+convolver.normalize = true;
+
+
+
 source1 = offlineCtx.createBufferSource();
-const compressorNode = offlineCtx.createDynamicsCompressor();
-
-if(isNaN(threshold)){
-
-}
-else{
-    compressorNode.threshold.value = threshold;
-}
-
-if(isNaN(knee)){
-
-}
-
-else{
-    compressorNode.knee.value = knee;
-}
-
-if(isNaN(ratio)){
-
-}
-
-else{
-    compressorNode.ratio.value = ratio;
-}
-
-if(isNaN(attack)){
-
-}
-
-else{
-    compressorNode.attack.value = attack;
-}
-
-if(isNaN(release)){
-
-}
-
-else{
-    compressorNode.release.value = release;
-}
-
-
-
 source1.buffer = sourcebuffer;
-source1.connect(compressorNode)
-compressorNode.connect(offlineCtx.destination)
+var gain = offlineCtx.createGain()
+if(isNaN(gain2)){
+
+}
+else{
+gain.gain.value = gain2
+}
+
+
+source1.connect(convolver);
+convolver.connect(gain);
+gain.connect(offlineCtx.destination);
 source1.start(0)
 source1.stop(array1.length/bufferarray.sampleRate)
          offlineCtx

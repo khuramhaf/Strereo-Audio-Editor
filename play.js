@@ -84,13 +84,19 @@ document.getElementById("error").innerHTML = "Ending Point is greater than equal
         source = audiocontext.createBufferSource();
 
 
-
+        const analyser = audiocontext.createAnalyser();
+        analyser.fftSize = 2048;
+        
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteTimeDomainData(dataArray);
+        
+        // Connect the source to be analysed
+        source.connect(analyser);
          
          source.buffer=bufferarray;
-         source.connect(audiocontext.destination);
+         analyser.connect(audiocontext.destination);
          source.start(0, start, final);
-
-
          
          document.getElementById("duration").innerHTML = source.buffer.duration.toFixed(3);
      
@@ -106,5 +112,76 @@ intervalid =   setInterval(()=>{
 
 }, 1000);
     
-    }}
+    }
+
+
+    function draw() {
+
+
+        const canvas = document.getElementById("canvas12");
+    const canvasCtx = canvas.getContext("2d");
+        requestAnimationFrame(draw);
+      
+        analyser.getByteTimeDomainData(dataArray);
+      
+        canvasCtx.fillStyle = "rgb(200, 200, 200)";
+        canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+      
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+      
+        canvasCtx.beginPath();
+      
+        const sliceWidth = (canvas.width * 1.0) / bufferLength;
+        let x = 0;
+      
+        for (let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 128.0;
+          const y = (v * canvas.height) / 2;
+      
+          if (i === 0) {
+            canvasCtx.moveTo(x, y);
+          } else {
+            canvasCtx.lineTo(x, y);
+          }
+      
+          x += sliceWidth;
+        }
+      
+        canvasCtx.lineTo(canvas.width, canvas.height / 2);
+        canvasCtx.stroke();
+      }
+
+draw();
+
+}
+
+
+
+
+     
+
   }
+
+function drawmarker(){
+var time1=0
+    var canvas = document.getElementById("canvas11");
+    var ctx = canvas.getContext("2d")
+
+
+   var intervalid12 =   setInterval(()=>{
+    console.log("helloworld");
+        time1++;
+        ctx.fillStyle="black"
+        ctx.clearRect(0,0,canvas.width, canvas.height)
+        var xvalue =+ canvas.width/source.buffer.duration
+        ctx.fillRect(xvalue,0,10, 150)
+        if (time1 >= parseInt(end)){
+            clearInterval(intervalid12);
+        }
+    
+    }, 1000);
+}
+
+
+ 

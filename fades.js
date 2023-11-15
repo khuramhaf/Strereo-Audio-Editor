@@ -203,7 +203,7 @@ var canvascontext = document.getElementById('canvas11');
 
 var canctx = canvascontext.getContext('2d');
 canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
-
+canctx.globalAlpha = 1;
 canctx.fillStyle = "black"
 canctx.beginPath();
 canctx.moveTo(0, canvascontext.height / 2);

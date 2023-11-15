@@ -1,4 +1,4 @@
-var newsource;
+
 
 function biquadpreview(){
     clearInterval(intervalid);
@@ -31,12 +31,12 @@ if (sourcecheck === null){
     }
 
     
-    if(source1){
+     if(source1){
         source1.stop();
     }
 
-    if(source1){
-        source1.stop();
+    else{
+
     }
 
 }
@@ -89,6 +89,11 @@ document.getElementById("error").innerHTML = "Ending Point is greater than equal
 
 }
 
+else if (isNaN(startgain)){
+
+    
+}
+
 else{
 
 
@@ -126,17 +131,31 @@ else if(typeselect === "band pass"){
     gain.type = 'bandpass'
 }
 
-else {
-
+else if (typeselect === "low shelf"){
+    gain.type = 'lowshelf'
+    }
     
-}
+    else if (typeselect === "high shelf"){
+        gain.type = 'highshelf'
+        }
+    
+        else if (typeselect === "peaking"){
+            gain.type = 'peaking'
+            }
+    
+    
+            else if (typeselect === "notch"){
+                gain.type = 'notch'
+                }
+    
+    else {
+        gain.type = 'allpass'
+    
+    }
 if(gainselect ==='set value at time'){
 
     if (isNaN(startgain)){
-        source1.buffer = sourcebuffer;
-        source1.connect(gain)
-        gain.connect(offlineCtx.destination)
-        source1.start(0,0,0)
+       
 
     }
     else{
@@ -148,6 +167,7 @@ if(gainselect ==='set value at time'){
     }
 else {
     gain.Q.value = qvalue;
+    
 }
 
 if(isNaN(gain1)){
@@ -156,6 +176,7 @@ if(isNaN(gain1)){
 else {
 
     gain.gain.value=gain1;
+   
 }
     source1.buffer = sourcebuffer;
 source1.connect(gain)
@@ -167,10 +188,6 @@ source1.start(0)
 if(gainselect ==='linear ramp'){
 
     if(isNaN(startgain)||isNaN(gainreach)){
-        source1.buffer = sourcebuffer;
-        source1.connect(gain)
-        gain.connect(offlineCtx.destination)
-        source1.start(0,0,0)
 
     }
 else{
@@ -201,10 +218,7 @@ else {
 if(gainselect ==='exponential ramp'){
 
     if(isNaN(startgain) || isNaN(gainreach) || gainreach<=0){
-        source1.buffer = sourcebuffer;
-        source1.connect(gain)
-        gain.connect(offlineCtx.destination)
-        source1.start(0,0,0)
+       
     
     }
 

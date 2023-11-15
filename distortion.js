@@ -184,6 +184,7 @@ var canctx = canvascontext.getContext('2d');
 canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
 
 canctx.fillStyle = "black"
+canctx.globalAlpha = 1;
 canctx.beginPath();
 canctx.moveTo(0, canvascontext.height / 2);
 canctx.lineWidth = 1;

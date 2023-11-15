@@ -86,6 +86,7 @@ var newarray = bufferarray.getChannelData(0);
    var canctx = canvascontext.getContext('2d');
    canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
    canctx.fillStyle = "black"
+   canctx.globalAlpha = 1;
    canctx.beginPath();
    canctx.moveTo(0, canvascontext.height / 2);
    canctx.lineWidth = 1;
@@ -102,8 +103,18 @@ canctx.stroke();
     
        
            
-           source.buffer=bufferarray;
-           source.connect(audiocontext.destination);
+const analyser = audiocontext.createAnalyser();
+analyser.fftSize = 2048;
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+analyser.getByteTimeDomainData(dataArray);
+
+// Connect the source to be analysed
+source.connect(analyser);
+ 
+ source.buffer=bufferarray;
+ analyser.connect(audiocontext.destination);
            source.start(0, sourceduration);
            sourceduration = source.buffer.duration;
            
@@ -123,13 +134,64 @@ canctx.stroke();
     document.getElementById("status").innerHTML = "";
     document.getElementById("Spinner").style.display = "none"
     document.getElementById("spinner1").style.display = "none"
-       }).catch(function(error){
+       
+
+
+    function draw() {
+
+
+        const canvas = document.getElementById("canvas12");
+    const canvasCtx = canvas.getContext("2d");
+        requestAnimationFrame(draw);
+      
+        analyser.getByteTimeDomainData(dataArray);
+      
+        canvasCtx.fillStyle = "rgb(200, 200, 200)";
+        canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+      
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+      
+        canvasCtx.beginPath();
+      
+        const sliceWidth = (canvas.width * 1.0) / bufferLength;
+        let x = 0;
+      
+        for (let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 128.0;
+          const y = (v * canvas.height) / 2;
+      
+          if (i === 0) {
+            canvasCtx.moveTo(x, y);
+          } else {
+            canvasCtx.lineTo(x, y);
+          }
+      
+          x += sliceWidth;
+        }
+      
+        canvasCtx.lineTo(canvas.width, canvas.height / 2);
+        canvasCtx.stroke();
+      }
+
+draw();
+
+
+
+
+
+
+
+
+
+
+}).catch(function(error){
         document.getElementById("status").innerHTML = "";
         document.getElementById("Spinner").style.display = "none"
         document.getElementById("spinner1").style.display = "none"
 
         document.getElementById("error").innerHTML = "Cannot open file"
-       });;
+       });
     
       
      } 
@@ -140,6 +202,14 @@ canctx.stroke();
     }
     
     document.getElementById("inputGroupFile02").value = '';
+
+
+
+
+
+
+
+
     }
     
    

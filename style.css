@@ -8,6 +8,21 @@ body {
     height:50vh;
   }
 
+
+  #canvas11{
+    display:block;
+  }
+
+  #canvas12{
+
+    width:100%;
+    height:20px;
+  }
+
+  #stopreco{
+    display:none;
+  }
+
   .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-top: 4px solid #3498db;
@@ -37,6 +52,7 @@ body {
 
   #container{
     width:100%;
+    padding:1%;
   }
 
   #Spinner{
@@ -54,6 +70,27 @@ body {
     z-index: 1;
     width:40%
   }
+
+
+  
+  #reverbux{
+    display:none;
+    z-index: 1;
+    width:40%
+  }
+
+  #playbackux{
+    display:none;
+    z-index: 1;
+    width:40%
+  }
+
+  #echoux{
+    display:none;
+    z-index: 1;
+    width:40%
+  }
+
 
   #disux{
     display:none;
@@ -216,6 +253,10 @@ margin-left: 10px;
   width:70%
 }
 
+#echoux{
+  width:70%
+}
+
 #biquadux{
 
   width:70%
@@ -233,6 +274,13 @@ margin-left: 10px;
 }
 
 
+
+#reverbux{
+
+  width:70%
+}
+
+
 #compressionux{
 
   width:70%
@@ -242,4 +290,20 @@ margin-left: 10px;
   width:100%;
   height:40vh;
 }
+
+#ad{
+  width:50%;
+}
+
+#canvas11{
+  display:none;
+}
+
+
+#canvas12{
+
+  width:100%;
+  height:20px;
+}
+
   }

@@ -153,8 +153,25 @@ else if(typeselect === "band pass"){
     gain.type = 'bandpass'
 }
 
-else {
+else if (typeselect === "low shelf"){
+gain.type = 'lowshelf'
+}
 
+else if (typeselect === "high shelf"){
+    gain.type = 'highshelf'
+    }
+
+    else if (typeselect === "peaking"){
+        gain.type = 'peaking'
+        }
+
+
+        else if (typeselect === "notch"){
+            gain.type = 'notch'
+            }
+
+else {
+    gain.type = 'allpass'
 
 }
 if(gainselect ==='set value at time'){
@@ -180,6 +197,8 @@ if(isNaN(gain1)){
 else {
 
     gain.gain.value=gain1;
+
+   
 }
 
 }
@@ -274,7 +293,7 @@ var canvascontext = document.getElementById('canvas11');
 
 var canctx = canvascontext.getContext('2d');
 canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
-
+canctx.globalAlpha = 1;
 canctx.fillStyle = "black"
 canctx.beginPath();
 canctx.moveTo(0, canvascontext.height / 2);

@@ -17,17 +17,11 @@ document.getElementById("totallength").innerHTML=bufferarray.length;
 source = audiocontext.createBufferSource();
 source.buffer=bufferarray;
 source.connect(audiocontext.destination);
-source.start(0);
+source.start(0, 0, 0);
 sourceduration = source.buffer.duration;
 document.getElementById("duration").innerHTML = source.buffer.duration;
 if ( source.buffer.duration >=1){
-intervalid =   setInterval(()=>{
-time++;
-document.getElementById("timer").innerHTML = time;
-if (time === parseInt(source.buffer.duration)){
-clearInterval(intervalid);
-}
-}, 1000);
+
 }
 
 }
@@ -37,6 +31,7 @@ var newarray = bufferarray.getChannelData(0)
 var canctx = canvascontext.getContext('2d');
 canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
 canctx.fillStyle = "black"
+canctx.globalAlpha = 1;
 canctx.beginPath();
 canctx.moveTo(0, canvascontext.height / 2);
 canctx.lineWidth = 1;

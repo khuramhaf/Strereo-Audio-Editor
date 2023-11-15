@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Changing Effect</title>
+</head>
+<body>
+  <input type="file" id="audioFile" accept="audio/*">
+  <audio controls id="audioPlayer"></audio>
+  
+<button onclick="myfun()">click</button>
+  <script>
+ function myfun(){
+
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+// Fetch the MP3 audio file
+fetch('sample.mp3')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.arrayBuffer(); // Fetch audio as array buffer
+  })
+  .then(audioData => {
+    // Decode the fetched audio data into an audio buffer
+    return audioContext.decodeAudioData(audioData);
+  })
+  .then(decodedAudio => {
+    const bufferSize = audioContext.sampleRate * .4; // Adjust the buffer size as needed
+const impulseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+const impulseData = impulseBuffer.getChannelData(0);
+
+// Generate a synthetic impulse (for example, a short burst)
+for (let i = 0; i < bufferSize; i++) {
+        // Apply decay by gradually reducing amplitude over time
+        const decayFactor = 1 - (i / bufferSize);
+        impulseData[i] = (Math.random() * 2 - 1) * decayFactor; // Apply decay to the impulse
+      }
+
+// Create a ConvolverNode to apply the synthetic impulse response
+const convolver = audioContext.createConvolver();
+convolver.buffer = impulseBuffer;
+convolver.normalize = true;
+
+var source = audioContext.createBufferSource();
+source.buffer = decodedAudio
+source.connect(convolver);
+var gain = audioContext.createGain();
+gain.gain.value = 25;
+
+convolver.connect(gain)
+gain.connect(audioContext.destination);
+
+source.start(0)
+  })
+  .catch(error => {
+    console.error('There was a problem fetching/processing the audio:', error);
+  });}
+  </script>
+</body>
+</html>

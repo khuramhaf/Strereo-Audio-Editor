@@ -1,16 +1,14 @@
 var newsource;
 
-function compressor1(){
+function playback1(){
     clearInterval(intervalid);
+    document.getElementById("playbackux").style.display = "none"
 
-    document.getElementById("compressionux").style.display = "none"
+    document.getElementById("echoux").style.display = "none"
     var start = parseFloat(document.getElementById("start").value);
     var end = parseFloat(document.getElementById("end").value);
-    var threshold= parseFloat(document.getElementById("threshold").value);
-    var knee = parseFloat(document.getElementById("knee").value);
-    var ratio = parseFloat(document.getElementById("ratio").value)
-    var attack = parseFloat(document.getElementById("attack").value)
-   var release = document.getElementById("release").value; 
+    var delay= parseFloat(document.getElementById("playbackrate").value);
+    
   
 
 time = parseInt(start);
@@ -86,6 +84,10 @@ document.getElementById("error").innerHTML = "Ending Point is greater than equal
 
 }
 
+else if (isNaN(delay)){
+    
+}
+
 else{
     var newbuffer = audiocontext.createBuffer(bufferarray.numberOfChannels, bufferarray.length, bufferarray.sampleRate)
 var ab3 = newbuffer.getChannelData(0)
@@ -107,103 +109,49 @@ if (undo.length ===3){
 }
 
 undo.push(newbuffer);
+var lengthcheck;
+
+lengthcheck = start + (end-start)/delay
+   var offlineCtx;
 
 
+   if(delay>1){
+
+    offlineCtx = new OfflineAudioContext(bufferarray.numberOfChannels, bufferarray.length - (((end-start)*bufferarray.sampleRate)-((end-start)/delay)*bufferarray.sampleRate), audiocontext.sampleRate);
+   }
+
+   if(delay<1){
+
+    offlineCtx = new OfflineAudioContext(bufferarray.numberOfChannels, bufferarray.length + ((end-start)/(delay))*bufferarray.sampleRate, audiocontext.sampleRate);
+   }
+
+   else{
 
 
-    const offlineCtx = new OfflineAudioContext(bufferarray.numberOfChannels, final*(bufferarray.sampleRate), audiocontext.sampleRate);
+   }
    
-var array1 = new Float32Array(end*bufferarray.sampleRate -start*bufferarray.sampleRate)
-var array5;
-
-if(bufferarray.numberOfChannels >1){
-    var array5 = new Float32Array(end*bufferarray.sampleRate -start*bufferarray.sampleRate)
-
-   bufferarray.copyFromChannel(array5, 1, bufferarray.sampleRate)
-
-}
-bufferarray.copyFromChannel(array1, 0, start*bufferarray.sampleRate)
-
-var sourcebuffer = offlineCtx.createBuffer(bufferarray.numberOfChannels, array1.length, bufferarray.sampleRate);
-
-var channeldata = sourcebuffer.getChannelData(0)
-
-channeldata.set(array1)
-
-if(bufferarray.numberOfChannels>1){
-
-    var channeldata1 = sourcebuffer.getChannelData(1)
-    channeldata1.set(array5)
-}
 
 source1 = offlineCtx.createBufferSource();
-const compressorNode = offlineCtx.createDynamicsCompressor();
+source1.buffer = bufferarray;
+source1.playbackRate.setValueAtTime(delay, start)
+source1.playbackRate.setValueAtTime(1, lengthcheck)
 
-if(isNaN(threshold)){
-
-}
-else{
-    compressorNode.threshold.value = threshold;
-}
-
-if(isNaN(knee)){
-
-}
-
-else{
-    compressorNode.knee.value = knee;
-}
-
-if(isNaN(ratio)){
-
-}
-
-else{
-    compressorNode.ratio.value = ratio;
-}
-
-if(isNaN(attack)){
-
-}
-
-else{
-    compressorNode.attack.value = attack;
-}
-
-if(isNaN(release)){
-
-}
-
-else{
-    compressorNode.release.value = release;
-}
-
-
-
-source1.buffer = sourcebuffer;
-source1.connect(compressorNode)
-compressorNode.connect(offlineCtx.destination)
+source1.connect(offlineCtx.destination);
 source1.start(0)
-source1.stop(array1.length/bufferarray.sampleRate)
+
          offlineCtx
         .startRendering()
         .then((renderedBuffer) => {
 
-            
+         source =    audiocontext.createBufferSource()
+         source.buffer = renderedBuffer;
+         source.connect(audiocontext.destination);
+         source.start(0,0,0)
 
-          var array3 = renderedBuffer.getChannelData(0)
+          var array4 = renderedBuffer.getChannelData(0)
 
-
-            bufferarray.copyToChannel(array3, 0, start*bufferarray.sampleRate)
-
-            if(bufferarray.numberOfChannels>1){
-                bufferarray.copyToChannel(array5, 1, start*bufferarray.sampleRate)
-            }
-
-            var array4 = bufferarray.getChannelData(0)
-
+bufferarray=renderedBuffer;
          
-array = renderedBuffer.getChannelData(0)
 var canvascontext = document.getElementById('canvas11');
 
 var canctx = canvascontext.getContext('2d');
