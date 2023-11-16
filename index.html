@@ -226,28 +226,28 @@
 
         <h5>Compression</h5>
         <div>
-        <label>Threshold:</label>
+        <label>Threshold (between -100 to 0):</label>
         <button style="margin-left:10%;float:right" onclick="compressorpreview1()">Preview</button>
 
         
         <br/>
-        <input id="threshold" type="number" required/>
+        <input  id="threshold" type="number"  required/>
         <br/>
-        <label>Knee:</label>
+        <label>Knee (between 0 to 40):</label>
         <br/>
-        <input id="knee" type="number" required/>
+        <input  id="knee" type="number"  required/>
         <br/>
-        <label>Ratio:</label>
+        <label>Ratio (between 1 to 20):</label>
         <br/>
-        <input id="ratio" type="number" required/>
+        <input  id="ratio" type="number"  required/>
         <br/>
-        <label>Attack:</label>
+        <label>Attack (between 0 to 1):</label>
         <br/>
-        <input id="attack" type="number" required/>
+        <input  id="attack" type="number"  required/>
         <br/>
-        <label>Release:</label>
+        <label>Release (between 0 to 1):</label>
         <br/>
-        <input id="release" type="number" required/>
+        <input  id="release" type="number"  required/>
         </div>
         <button onclick="compressor1()">Apply</button>
     
@@ -262,7 +262,7 @@
       
       <h5>Echo</h5>
       <div>
-      <label>Delay:</label>
+      <label>Delay (between 0 and 1):</label>
       <button style="margin-left:10%;float:right" onclick="echopreview1()">Preview</button>
 
       
@@ -331,7 +331,7 @@
     
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="index.html">Amooiz.com</a>
+              <a class="navbar-brand" href="index.html"><img src="amooiz.png"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -402,7 +402,7 @@
 </div>
 <canvas id="canvas12" style="border:1px solid black; background-color: gainsboro;"></canvas>
 
-<canvas onclick="drawline1()" onmousedown="mouseDown(event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)"  id ="canvas11" width="1290" height="150" style="background-color: blue;"></canvas>
+<canvas onclick="drawline1()"  onmousedown="mouseDown(event)" onmousemove="mouseMove(event)" onmouseup="mouseUp(event)"  id ="canvas11" width="1290" height="150" style="background-color: blue;"></canvas>
 
 <br/>
 <div class="input-group mb-3">
@@ -493,6 +493,7 @@
         var sourceduration = 0;
         var undo = [];
         var source1;
+        var intervalid12
 
 
 
@@ -511,6 +512,8 @@ if (source){
 if (source1){
     source1.stop();
 }
+
+clearInterval(intervalid12)
 }
 
 

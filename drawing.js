@@ -182,7 +182,7 @@ else{
 function mouseUp(event) {
 if(bufferarray.length>0){
 
-
+    drawline();
 
   
     isresize = false;
@@ -222,6 +222,8 @@ isdrawing = false;
 
 else{
 
+   
+
 }
 
 
@@ -249,35 +251,20 @@ function drawline(){
     canctx.lineTo(x, y);
     }
     canctx.stroke();
+
+    ctx.fillStyle = "red"; // Set the fill color
+    ctx.globalAlpha = 0.2; 
+
+ctx.fillRect(rectx, 0, rectwidth, 150);
 }
 
 
 
 function drawline1(){
 
+if (source){
+    source.stop();
+    clearInterval(intervalid12)
+}
 
-    var canvascontext = document.getElementById('canvas11');
-    var newarray = bufferarray.getChannelData(0);
-       var canctx = canvascontext.getContext('2d');
-
-    
-       canctx.globalAlpha = 1;
-       canctx.clearRect(0,0,canvascontext.width, canvascontext.height)
-       canctx.fillStyle = "black"
-       canctx.beginPath();
-       canctx.moveTo(0, canvascontext.height / 2);
-       canctx.lineWidth = 1;
-    const topOffset = 10;
-    const bottomOffset = 10;
-    for (let i = 0; i < newarray.length; i=i+500) {
-    const x = i / newarray.length * canvascontext.width;
-    const y = ((newarray[i] + 1) / 2 * (canvascontext.height - topOffset - bottomOffset)) + topOffset;
-    canctx.lineTo(x, y);
-    }
-    canctx.stroke();
-
-    ctx.fillStyle = "red"; // Set the fill color
-    ctx.globalAlpha = 0.2; 
-
-ctx.fillRect(rectx, 0, rectwidth, 150);
 }

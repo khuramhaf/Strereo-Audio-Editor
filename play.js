@@ -7,7 +7,7 @@ var end = parseFloat(document.getElementById("end").value);
 
 time = parseInt(start);
 
-
+var final = end-start
 
 
   
@@ -97,7 +97,7 @@ document.getElementById("error").innerHTML = "Ending Point is greater than equal
          source.buffer=bufferarray;
          analyser.connect(audiocontext.destination);
          source.start(0, start, final);
-         
+         drawmarker();
          document.getElementById("duration").innerHTML = source.buffer.duration.toFixed(3);
      
          if (parseInt(start) != parseInt(end)){
@@ -164,23 +164,48 @@ draw();
   }
 
 function drawmarker(){
-var time1=0
+    var start = parseFloat(document.getElementById("start").value);
+    var end = parseFloat(document.getElementById("end").value);
+    
+    var final = end-start
+
+
+var time1=start*20
     var canvas = document.getElementById("canvas11");
     var ctx = canvas.getContext("2d")
 
 
-   var intervalid12 =   setInterval(()=>{
-    console.log("helloworld");
-        time1++;
-        ctx.fillStyle="black"
-        ctx.clearRect(0,0,canvas.width, canvas.height)
-        var xvalue =+ canvas.width/source.buffer.duration
-        ctx.fillRect(xvalue,0,10, 150)
-        if (time1 >= parseInt(end)){
+   intervalid12 =   setInterval(()=>{
+
+    var newarray = bufferarray.getChannelData(0);
+     
+       ctx.clearRect(0,0,canvas.width, canvas.height)
+       ctx.fillStyle = "black"
+       ctx.globalAlpha = 1;
+       ctx.beginPath();
+       ctx.moveTo(0, canvas.height / 2);
+       ctx.lineWidth = 1;
+    const topOffset = 10;
+    const bottomOffset = 10;
+    for (let i = 0; i < newarray.length; i=i+500) {
+    const x = i / newarray.length * canvas.width;
+    const y = ((newarray[i] + 1) / 2 * (canvas.height - topOffset - bottomOffset)) + topOffset;
+    ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+   
+        time1=time1+1;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle="yellow"
+       var xvalue = ((time1/source.buffer.duration)*canvas.width)/20
+     
+        ctx.fillRect(xvalue,0,5, 150)
+        if (time1 >= parseInt(end*20)){
             clearInterval(intervalid12);
+            time1=start*20;
         }
     
-    }, 1000);
+    }, 50);
 }
 
 
